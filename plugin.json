@@ -1,13 +1,18 @@
 {
-    "id": "gpuMonitor",
-    "name": "GPU Monitor",
-    "description": "NVIDIA GPU load as an animated progress bar in the DankBar, updated every second",
-    "version": "1.0.0",
-    "author": "Rolle Laukkarinen",
-    "icon": "speed",
-    "type": "widget",
-    "capabilities": ["dankbar-widget"],
-    "component": "./GpuWidget.qml",
-    "settings": "./GpuSettings.qml",
-    "permissions": ["settings_read", "settings_write"]
+  "id": "gpuMonitor",
+  "name": "GPU Monitor",
+  "description": "NVIDIA GPU load as an animated progress bar in the DankBar, updated every second",
+  "version": "1.1.0",
+  "author": "Rolle Laukkarinen",
+  "icon": "speed",
+  "type": "widget",
+  "capabilities": [
+    "dankbar-widget"
+  ],
+  "component": "./GpuWidget.qml",
+  "settings": "./GpuSettings.qml",
+  "permissions": [
+    "settings_read",
+    "settings_write"
+  ]
 }
