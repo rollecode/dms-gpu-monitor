@@ -1,5 +1,10 @@
 # Changelog
 
+### 1.2.0: 2026-07-17
+
+* Pin Temp and Fan under Idle, always on top: temperature in celsius, fan as a percentage, bars read as global scale with the usual colour thresholds
+* Show each row's own unit instead of forcing %
+
 ### 1.1.0: 2026-07-17
 
 * Add a popout listing per-process GPU load, biggest first, with a kill icon on each process

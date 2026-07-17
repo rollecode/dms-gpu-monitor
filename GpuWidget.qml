@@ -69,12 +69,15 @@ PluginComponent {
                         pid: f[2],
                         name: f[3],
                         detail: f[4] || "",
+                        unit: f[5] || "%",
                         killable: f[0] === "P",
                         free: f[0] === "F",
+                        pinned: f[0] === "F" || f[0] === "I",
                         share: parseInt(f[1]) / 100
                     })
                 }
-                out.sort((a, b) => (a.free !== b.free) ? (a.free ? -1 : 1) : b.value - a.value)
+                // stable sort keeps pinned rows in emitted order: Idle, Temp, Fan
+                out.sort((a, b) => (a.pinned !== b.pinned) ? (a.pinned ? -1 : 1) : (a.pinned ? 0 : b.value - a.value))
                 root.rows = out.slice(0, root.topCount)
             }
         }
@@ -201,7 +204,7 @@ PluginComponent {
                                 StyledText {
                                     width: 46
                                     horizontalAlignment: Text.AlignRight
-                                    text: `${modelData.value}%`
+                                    text: `${modelData.value}${modelData.unit}`
                                     font.pixelSize: Theme.fontSizeSmall - 1
                                     color: modelData.free ? Theme.primary : Theme.surfaceVariantText
                                     opacity: modelData.free ? 1.0 : 0.7
@@ -219,7 +222,7 @@ PluginComponent {
                                         width: parent.width * Math.min(modelData.share || 0, 1)
                                         height: parent.height
                                         radius: parent.radius
-                                        color: modelData.free ? Theme.primary : (modelData.killable ? root.usageColor(modelData.value) : Theme.surfaceVariantText)
+                                        color: modelData.free ? Theme.primary : ((modelData.killable || modelData.pinned) ? root.usageColor(modelData.value) : Theme.surfaceVariantText)
                                     }
                                 }
                             }
