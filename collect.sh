@@ -49,8 +49,8 @@ done
 
 nvidia-smi --query-gpu=utilization.gpu,temperature.gpu,fan.speed --format=csv,noheader,nounits 2>/dev/null | awk -F', ' '
 {
+  if ($2 != "" && $2 != "[N/A]") printf "F\t%d\t-\tTemp\t\t°C\n", $2
   printf "F\t%d\t-\tIdle\t\t%%\n", 100-$1
-  if ($2 != "" && $2 != "[N/A]") printf "I\t%d\t-\tTemp\t\t°C\n", $2
-  if ($3 != "" && $3 != "[N/A]") printf "I\t%d\t-\tFan\t\t%%\n", $3
+  if ($3 != "" && $3 != "[N/A]") printf "F\t%d\t-\tFan\t\t%%\n", $3
   printf "T\t100\t-\tscale\t\t\n"
 }'

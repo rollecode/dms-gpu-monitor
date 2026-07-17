@@ -131,6 +131,11 @@ PluginComponent {
             }
 
             StyledText {
+                // Fixed width: digits changing every second must not resize
+                // the pill, or the bar relayouts constantly and hit-testing
+                // chases stale geometry.
+                width: 34
+                horizontalAlignment: Text.AlignRight
                 text: `${root.gpuPercent.toFixed(0)}%`
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.surfaceText
@@ -191,6 +196,8 @@ PluginComponent {
                                     font.pixelSize: Theme.fontSizeSmall - 1
                                     color: Theme.surfaceVariantText
                                     opacity: 0.55
+                                    wrapMode: Text.NoWrap
+                                    maximumLineCount: 1
                                     elide: Text.ElideRight
                                     anchors.verticalCenter: parent.verticalCenter
                                 }
@@ -222,7 +229,7 @@ PluginComponent {
                                         width: parent.width * Math.min(modelData.share || 0, 1)
                                         height: parent.height
                                         radius: parent.radius
-                                        color: modelData.free ? Theme.primary : ((modelData.killable || modelData.pinned) ? root.usageColor(modelData.value) : Theme.surfaceVariantText)
+                                        color: modelData.name === "Idle" ? Theme.primary : root.usageColor(modelData.value)
                                     }
                                 }
                             }

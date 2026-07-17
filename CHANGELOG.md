@@ -1,5 +1,12 @@
 # Changelog
 
+### 1.3.0: 2026-07-17
+
+* Pin Temp first and accent it along with Fan; Idle keeps the accent bar
+* Colour Temp, Fan and process bars with the orange and red thresholds
+* Keep the pill a constant width: the per-second percentage swing kept the bar in permanent relayout, which also left a stale clickable area on the pill
+* Keep row explanations on one line, never wrapping
+
 ### 1.2.0: 2026-07-17
 
 * Pin Temp and Fan under Idle, always on top: temperature in celsius, fan as a percentage, bars read as global scale with the usual colour thresholds
