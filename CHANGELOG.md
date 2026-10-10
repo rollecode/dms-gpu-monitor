@@ -1,5 +1,10 @@
 # Changelog
 
+### 1.5.1: 2026-10-10
+
+* Fix polling, theme colour and naming from review [#620](https://github.com/AvengeMedia/dms-plugin-registry/issues/620)
+* Hide kill button on session processes
+
 ### 1.5.0: 2026-07-26
 
 * Warm the popout list in the background so it paints instantly instead of filling in up to a second after opening

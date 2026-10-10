@@ -13,8 +13,12 @@ PluginComponent {
     property bool showLabel: pluginData.showLabel !== false
     property string labelText: pluginData.labelText || "GPU"
     property int topCount: pluginData.topCount || 30
+    // Each nvidia-smi run is a full driver query, so it is not polled every second by default.
+    property int pollSeconds: pluginData.pollSeconds || 2
     property var rows: []
     property bool popoutOpen: false
+    // Killing any of these ends or breaks the session, so their rows get no kill button.
+    readonly property var sessionCritical: ["driftwm", "Hyprland", "niri", "sway", "river", "labwc", "wayfire", "kwin_wayland", "kwin_x11", "gnome-shell", "plasmashell", "Xwayland", "xwayland-satell", "Xorg", "qs", "quickshell", "dms", "pipewire", "wireplumber", "dbus-daemon", "dbus-broker", "systemd"]
 
     // Bar-aware sizing: the DankBar carries its own font scale and thickness,
     // and a pill that ignores them stays put while everything else resizes.
@@ -22,7 +26,7 @@ PluginComponent {
 
     function usageColor(percent) {
         if (percent > 90) return Theme.error
-        if (percent > 75) return "#ffa500"
+        if (percent > 75) return Theme.warning
         return Theme.primary
     }
 
@@ -35,7 +39,7 @@ PluginComponent {
     }
 
     Timer {
-        interval: 1000
+        interval: root.pollSeconds * 1000
         running: true
         repeat: true
         triggeredOnStart: true
@@ -56,17 +60,14 @@ PluginComponent {
         }
     }
 
-    // Warm the list in the background: the collectors take up to a second, and
-    // starting them on click leaves the popout empty until they finish.
+    // Process scans only while someone is looking; the last list stays shown until the first refresh.
     Timer {
-        interval: root.popoutOpen ? 2000 : 20000
-        running: true
+        interval: 2000
+        running: root.popoutOpen
         repeat: true
         triggeredOnStart: true
         onTriggered: rowsProcess.running = true
     }
-
-    onPopoutOpenChanged: if (popoutOpen) rowsProcess.running = true
 
     Process {
         id: rowsProcess
@@ -86,7 +87,7 @@ PluginComponent {
                         name: f[3],
                         detail: f[4] || "",
                         unit: f[5] || "%",
-                        killable: f[0] === "P",
+                        killable: f[0] === "P" && root.sessionCritical.indexOf(f[3]) === -1,
                         free: f[0] === "F",
                         pinned: f[0] === "F" || f[0] === "I",
                         share: parseInt(f[1]) / 100

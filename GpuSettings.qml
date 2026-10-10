@@ -9,7 +9,7 @@ PluginSettings {
 
     StyledText {
         width: parent.width
-        text: "GPU Monitor"
+        text: "NVIDIA GPU Monitor"
         font.pixelSize: Theme.fontSizeLarge
         font.weight: Font.Bold
         color: Theme.surfaceText
@@ -17,7 +17,7 @@ PluginSettings {
 
     StyledText {
         width: parent.width
-        text: "NVIDIA GPU load as an animated progress bar in your DankBar, updated every second."
+        text: "NVIDIA GPU load as an animated progress bar in your DankBar. Needs nvidia-smi."
         font.pixelSize: Theme.fontSizeSmall
         color: Theme.surfaceVariantText
         wrapMode: Text.WordWrap
@@ -43,6 +43,16 @@ PluginSettings {
         description: "The label shown next to the icon"
         placeholder: "GPU"
         defaultValue: "GPU"
+    }
+
+    SliderSetting {
+        settingKey: "pollSeconds"
+        label: "Update interval"
+        description: "Seconds between GPU load reads. Each read runs nvidia-smi."
+        defaultValue: 2
+        minimum: 1
+        maximum: 10
+        unit: "s"
     }
 
     SliderSetting {

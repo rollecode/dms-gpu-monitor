@@ -1,8 +1,8 @@
 {
   "id": "gpuMonitor",
-  "name": "GPU Monitor",
-  "description": "NVIDIA GPU load as an animated progress bar in the DankBar, updated every second",
-  "version": "1.5.0",
+  "name": "NVIDIA GPU Monitor",
+  "description": "NVIDIA GPU load as an animated progress bar in the DankBar, with a popout listing per-process GPU use and a button that sends SIGTERM to a user process. Needs nvidia-smi.",
+  "version": "1.5.1",
   "author": "Rolle Laukkarinen",
   "icon": "speed",
   "type": "widget",
